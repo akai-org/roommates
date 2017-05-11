@@ -19,6 +19,13 @@ defmodule Roommates.Router do
     get "/", PageController, :index
   end
 
+  scope "/auth", Roommates do
+    pipe_through :browser
+
+    # get "/:provider", AuthController, :request
+    # get "/:provider/callback", AuthController, :callback
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", Roommates do
   #   pipe_through :api
