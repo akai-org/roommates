@@ -25,7 +25,7 @@ config :logger, :console,
 # Configures Ueberauth's providers
 config :ueberauth, Ueberauth,
   providers: [
-    facebook: { Ueberauth.Strategy.Facebook, []}
+    facebook: { Ueberauth.Strategy.Facebook, [profile_fields: "name,email,picture"]}
   ]
 
 # Configure credentials for Facebook API
