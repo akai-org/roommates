@@ -5,9 +5,7 @@ defmodule Roommates.Auth do
   alias Roommates.UserSocial
   alias Roommates.User
 
-  def init(opts) do
-    Keyword.fetch!(opts, :repo)
-  end
+  def init(opts), do: Keyword.fetch!(opts, :repo)
 
   def call(conn, repo) do
     user_id = get_session(conn, :user_id)
@@ -36,28 +34,22 @@ defmodule Roommates.Auth do
     |> configure_session(renew: true)
   end
 
-  def logout(conn) do
-    delete_session(conn, :user_id)
-  end
+  def logout(conn), do: delete_session(conn, :user_id)
 end
 
 defmodule Roommates.Auth.RequireLogin do
   import Plug.Conn
   import Phoenix.Controller
 
-  def init(opts) do
-    opts
-  end
+  def init(opts), do: opts
+
+  def call(%Plug.Conn{assigns: %{current_user: %Roommates.User{}}} = conn, _opts), do: conn
 
   def call(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: "/")
-      |> halt()
-    end
+    conn
+    |> put_flash(:error, "You must be logged in to access that page")
+    |> redirect(to: "/")
+    |> halt()
   end
 end
 
@@ -65,18 +57,14 @@ defmodule Roommates.Auth.RequireGuest do
   import Plug.Conn
   import Phoenix.Controller
 
-  def init(opts) do
-    opts
-  end
+  def init(opts), do: opts
+
+  def call(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
 
   def call(conn, _opts) do
-    if !conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must be guest to access that page")
-      |> redirect(to: "/")
-      |> halt()
-    end
+    conn
+    |> put_flash(:error, "You must be guest to access that page")
+    |> redirect(to: "/")
+    |> halt()
   end
 end
