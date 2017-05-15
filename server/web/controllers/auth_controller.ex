@@ -1,6 +1,10 @@
 defmodule Roommates.AuthController do
   use Roommates.Web, :controller
+
   plug Ueberauth
+  plug Roommates.Auth.RequireGuest when not action in [:logout]
+  plug Roommates.Auth.RequireLogin when action in [:logout]
+
   alias Roommates.User
   alias Roommates.UserSocial
 

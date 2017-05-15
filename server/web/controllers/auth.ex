@@ -15,17 +15,6 @@ defmodule Roommates.Auth do
     assign(conn, :current_user, user)
   end
 
-  def authenticate_user(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: "/")
-      |> halt()
-    end
-  end
-
   def login_by_ueberauth(conn, auth, repo) do
     case repo.get_by(UserSocial, [provider: Atom.to_string(auth.provider),
       provider_uid: auth.uid]) do
@@ -49,5 +38,45 @@ defmodule Roommates.Auth do
 
   def logout(conn) do
     delete_session(conn, :user_id)
+  end
+end
+
+defmodule Roommates.Auth.RequireLogin do
+  import Plug.Conn
+  import Phoenix.Controller
+
+  def init(opts) do
+    opts
+  end
+
+  def call(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access that page")
+      |> redirect(to: "/")
+      |> halt()
+    end
+  end
+end
+
+defmodule Roommates.Auth.RequireGuest do
+  import Plug.Conn
+  import Phoenix.Controller
+
+  def init(opts) do
+    opts
+  end
+
+  def call(conn, _opts) do
+    if !conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be guest to access that page")
+      |> redirect(to: "/")
+      |> halt()
+    end
   end
 end
