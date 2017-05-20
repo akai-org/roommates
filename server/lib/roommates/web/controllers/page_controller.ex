@@ -1,4 +1,4 @@
-defmodule Roommates.PageController do
+defmodule Roommates.Web.PageController do
   use Roommates.Web, :controller
 
   def index(conn, _params) do

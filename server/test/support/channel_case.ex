@@ -1,4 +1,4 @@
-defmodule Roommates.ChannelCase do
+defmodule Roommates.Web.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -27,7 +27,7 @@ defmodule Roommates.ChannelCase do
 
 
       # The default endpoint for testing
-      @endpoint Roommates.Endpoint
+      @endpoint Roommates.Web.Endpoint
     end
   end
 

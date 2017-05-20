@@ -1,4 +1,4 @@
-defmodule Roommates.ConnCase do
+defmodule Roommates.Web.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -25,10 +25,10 @@ defmodule Roommates.ConnCase do
       import Ecto.Changeset
       import Ecto.Query
 
-      import Roommates.Router.Helpers
+      import Roommates.Web.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Roommates.Endpoint
+      @endpoint Roommates.Web.Endpoint
     end
   end
 

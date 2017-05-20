@@ -1,4 +1,4 @@
-defmodule Roommates.ErrorHelpers do
+defmodule Roommates.Web.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """

@@ -1,4 +1,4 @@
-defmodule Roommates.UserSocket do
+defmodule Roommates.Web.UserSocket do
   use Phoenix.Socket
 
   ## Channels

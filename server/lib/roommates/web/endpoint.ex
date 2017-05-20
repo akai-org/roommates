@@ -1,7 +1,7 @@
-defmodule Roommates.Endpoint do
+defmodule Roommates.Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :roommates
 
-  socket "/socket", Roommates.UserSocket
+  socket "/socket", Roommates.Web.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -38,5 +38,5 @@ defmodule Roommates.Endpoint do
     key: "_roommates_key",
     signing_salt: "yFVrHrIW"
 
-  plug Roommates.Router
+  plug Roommates.Web.Router
 end

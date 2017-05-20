@@ -1,4 +1,4 @@
-defmodule Roommates.ErrorView do
+defmodule Roommates.Web.ErrorView do
   use Roommates.Web, :view
 
   def render("404.html", _assigns) do

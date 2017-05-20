@@ -1,4 +1,4 @@
-defmodule Roommates.Router do
+defmodule Roommates.Web.Router do
   use Roommates.Web, :router
 
   pipeline :browser do
@@ -14,14 +14,14 @@ defmodule Roommates.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Roommates do
+  scope "/", Roommates.Web do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
     delete "/logout", AuthController, :logout
   end
 
-  scope "/auth", Roommates do
+  scope "/auth", Roommates.Web do
     pipe_through :browser
 
     get "/:provider", AuthController, :request
