@@ -1,5 +1,5 @@
 defmodule Roommates.PageControllerTest do
-  use Roommates.ConnCase
+  use Roommates.Web.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

@@ -28,20 +28,21 @@ defmodule Roommates.Web do
 
   def controller do
     quote do
-      use Phoenix.Controller
+      use Phoenix.Controller, namespace: Roommates.Web
 
       alias Roommates.Repo
       import Ecto
       import Ecto.Query
 
-      import Roommates.Router.Helpers
-      import Roommates.Gettext
+      import Roommates.Web.Router.Helpers
+      import Roommates.Web.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "web/templates"
+      use Phoenix.View, root: "lib/roommates/web/templates",
+                        namespace: Roommates.Web
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -49,9 +50,9 @@ defmodule Roommates.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Roommates.Router.Helpers
-      import Roommates.ErrorHelpers
-      import Roommates.Gettext
+      import Roommates.Web.Router.Helpers
+      import Roommates.Web.ErrorHelpers
+      import Roommates.Web.Gettext
     end
   end
 
@@ -68,7 +69,7 @@ defmodule Roommates.Web do
       alias Roommates.Repo
       import Ecto
       import Ecto.Query
-      import Roommates.Gettext
+      import Roommates.Web.Gettext
     end
   end
 

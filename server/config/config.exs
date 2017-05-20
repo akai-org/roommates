@@ -10,10 +10,10 @@ config :roommates,
   ecto_repos: [Roommates.Repo]
 
 # Configures the endpoint
-config :roommates, Roommates.Endpoint,
+config :roommates, Roommates.Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "QOLCxAFL8Q3nbh0o7QmJ2XE4/ahRp8c7r4q/nklc0kvVewHmKcvlDOYHdCBeLkCQ",
-  render_errors: [view: Roommates.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: Roommates.Web.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Roommates.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

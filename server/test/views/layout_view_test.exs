@@ -1,3 +1,3 @@
 defmodule Roommates.LayoutViewTest do
-  use Roommates.ConnCase, async: true
+  use Roommates.Web.ConnCase, async: true
 end
