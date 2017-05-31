@@ -63,7 +63,7 @@ defmodule Roommates.Auth do
     unless user do
       user = case create_user(auth) do
         {:ok, user} ->
-          conn |> Roommates.Auth.login(user)
+          conn |> login(user)
           user
         {:error, _changeset} ->
           conn
@@ -87,4 +87,11 @@ defmodule Roommates.Auth do
   def logout(conn) do
     delete_session(conn, :user_id)
   end
+
+  def current_user(conn) do
+    conn.assigns.current_user
+  end
+
+  def is_logged(%Plug.Conn{assigns: %{current_user: user}}, user), do: {:ok}
+  def is_logged(_conn, _user), do: {:wrong_user}
 end

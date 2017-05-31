@@ -7,6 +7,7 @@ defmodule Roommates.Auth.User do
     field :name, :string
     field :email, :string
     has_many :user_socials, Roommates.Auth.UserSocial
+    has_many :admin_rooms, Roommates.Rooms.Room, foreign_key: :admin_id
 
     timestamps()
   end

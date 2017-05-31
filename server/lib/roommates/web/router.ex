@@ -18,7 +18,13 @@ defmodule Roommates.Web.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/testlog", PageController, :test_login
     delete "/logout", AuthController, :logout
+
+    resources "/rooms", RoomController
+    get "/rooms/:id/add_roommate", RoomController, :new_roommate
+    post "/rooms/:id/add_roommate", RoomController, :add_roommate
+    delete "/rooms/:id/add_roommate/:user_id", RoomController, :remove_roommate
   end
 
   scope "/auth", Roommates.Web do

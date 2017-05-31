@@ -1,0 +1,26 @@
+<h2>Show Room</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @room.name %>
+  </li>
+  <li>
+    <strong>Admin:</strong>
+    <%= @room.admin.name %>
+  </li>
+  <li>
+    <strong>Roommates:</strong>
+    <ul>
+      <%= for roommate <- @room.roommates do %>
+        <li><%= roommate.name %><%= link "Delete", to: room_path(@conn, :remove_roommate, @room, roommate.id), method: :delete,
+          data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+
+<span><%= link "Add roommate", to: room_path(@conn, :add_roommate, @room) %></span>
+<span><%= link "Edit", to: room_path(@conn, :edit, @room) %></span>
+<span><%= link "Back", to: room_path(@conn, :index) %></span>

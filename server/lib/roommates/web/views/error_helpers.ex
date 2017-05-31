@@ -32,9 +32,9 @@ defmodule Roommates.Web.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(Roommates.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(Roommates.Web.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Roommates.Gettext, "errors", msg, opts)
+      Gettext.dgettext(Roommates.Web.Gettext, "errors", msg, opts)
     end
   end
 end
