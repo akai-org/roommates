@@ -3,8 +3,6 @@ defmodule Roommates.Rooms.RequireAdmin do
   import Phoenix.Controller
   import Roommates.Web.Router.Helpers
 
-  import IEx
-
   def init(opts), do: opts
 
   def call(%Plug.Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn, _opts) do
@@ -12,7 +10,7 @@ defmodule Roommates.Rooms.RequireAdmin do
 
     case room.admin do
       ^current_user ->
-        conn
+        assign(conn, :room, room)
       _ ->
         conn
         |> put_flash(:error, "You have no right manage this room")

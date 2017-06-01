@@ -1,11 +1,11 @@
 defmodule Roommates.Web.RoomController do
   use Roommates.Web, :controller
-  import IEx
+  alias Plug.Conn
   alias Roommates.Rooms
 
   plug Roommates.Auth.RequireLogin
   # TODO: optimize sql queries
-  plug Roommates.Rooms.RequireAdmin when not action in [:index, :new, :create]
+  plug Roommates.Rooms.RequireAdmin when not action in [:index, :new, :create, :show]
 
   def index(conn, _params) do
     rooms = Rooms.list_rooms()
@@ -34,15 +34,12 @@ defmodule Roommates.Web.RoomController do
     render(conn, "show.html", room: room)
   end
 
-  def edit(conn, %{"id" => id}) do
-    room = Rooms.get_room!(id)
+  def edit(%Conn{assigns: %{room: room}} = conn, %{"id" => id}) do
     changeset = Rooms.change_room(room)
     render(conn, "edit.html", room: room, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "room" => room_params}) do
-    room = Rooms.get_room!(id)
-
+  def update(%Conn{assigns: %{room: room}} = conn, %{"id" => id, "room" => room_params}) do
     case Rooms.update_room(room, room_params) do
       {:ok, room} ->
         conn
@@ -53,8 +50,7 @@ defmodule Roommates.Web.RoomController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    room = Rooms.get_room!(id)
+  def delete(%Conn{assigns: %{room: room}} = conn, %{"id" => id}) do
     {:ok, _room} = Rooms.delete_room(room)
 
     conn
@@ -62,15 +58,13 @@ defmodule Roommates.Web.RoomController do
     |> redirect(to: room_path(conn, :index))
   end
 
-  def new_roommate(conn, %{"id" => id}) do
-    room = Rooms.get_room!(id)
+  def new_roommate(%Conn{assigns: %{room: room}} = conn, %{"id" => id}) do
     changeset = Rooms.change_roommate(%Roommates.Rooms.Roommate{})
 
     render(conn, "new_roommate.html", room: room, changeset: changeset)
   end
 
-  def add_roommate(conn, %{"id" => id, "roommate" => roommate_params}) do
-    room = Rooms.get_room!(id)
+  def add_roommate(%Conn{assigns: %{room: room}} = conn, %{"id" => id, "roommate" => roommate_params}) do
     case Rooms.add_roommate(roommate_params, room) do
       {:ok, _roommate} ->
         conn
@@ -81,9 +75,7 @@ defmodule Roommates.Web.RoomController do
     end
   end
 
-  def remove_roommate(conn, %{"id" => id, "user_id" => user_id}) do
-    room = Rooms.get_room!(id)
-
+  def remove_roommate(%Conn{assigns: %{room: room}} = conn, %{"id" => id, "user_id" => user_id}) do
     {1, _roommate} = Rooms.remove_roommate(id, user_id)
     conn
     |> put_flash(:info, "Roommate removed successfully.")
